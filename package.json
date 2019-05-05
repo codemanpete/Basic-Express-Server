@@ -1,0 +1,16 @@
+{
+  "name": "99catsexpress",
+  "version": "1.0.0",
+  "description": "99 cats api using Express.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Peter Cheng",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  }
+}
