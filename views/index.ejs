@@ -10,6 +10,25 @@
             <div class="jumbotron">
                 99 Cats
             </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td><b>Cat Name</b></td>
+                        <td><b>Cat Age</b></td>
+                        <td colspan="2"><b>Action</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0; i < cats.length; ++i) { %>
+                        <tr>
+                            <td><%= cats[i].name %></td>
+                            <td><%= cats[i].age %></td>
+                            <td><a href="" class="btn btn-primary">Edit</a></td>
+                            <td><a href="" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

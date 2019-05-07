@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>EJS Engine</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="containter">
+            <h1>Add Cat</h1>
+            <form method="post" action="/cats/post">
+                <div class="form-group">
+                    <label for="item>">Cat Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="form-group">
+                    <label for="item">Cat Age</label>
+                    <input type="text" class="form-control" id="age" name="age">
+                </div>
+                <button type="submit" class="btn btn-default">Submit Cat</button>
+            </form>
+        </div>
+    </body>
+</html>
