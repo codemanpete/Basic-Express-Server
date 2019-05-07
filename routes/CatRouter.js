@@ -28,4 +28,30 @@ CatRouter.route('/post').post(function (req, res) {
             res.status(400).send("unable to save to database");
         });
 });
+
+CatRouter.route('/edit/:id').get(function (req, res) {
+    const id = req.params.id;
+    Cat.findById(id, function (err, cat) {
+        res.render('edit', {cat: cat});
+    });
+});
+
+CatRouter.route('/update/:id').post(function (req, res) {
+    Cat.findById(req.params.id, function(err, cat) {
+        if (!cat)
+            return next(new Error('Could not load Document'));
+        else {
+            cat.name = req.body.name;
+            cat.age = req.body.age;
+
+            cat.save().then(cat => {
+                res.redirect('/cats');
+            })
+            .catch(err => {
+                res.status(400).send("unable to update the database.");
+            });
+        }
+    });
+});
+
 module.exports = CatRouter;
