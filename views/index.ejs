@@ -24,7 +24,7 @@
                             <td><%= cats[i].name %></td>
                             <td><%= cats[i].age %></td>
                             <td><a href="/cats/edit/<%= cats[i]._id %>" class="btn btn-primary">Edit</a></td>
-                            <td><a href="" class="btn btn-danger">Delete</a></td>
+                            <td><a href="/cats/delete/<%= cats[i]._id %>" class="btn btn-danger">Delete</a></td>
                         </tr>
                     <% } %>
                 </tbody>

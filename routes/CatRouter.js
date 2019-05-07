@@ -54,4 +54,11 @@ CatRouter.route('/update/:id').post(function (req, res) {
     });
 });
 
+CatRouter.route('/delete/:id').get(function (req, res) {
+    Cat.findByIdAndRemove({_id: req.params.id}, function(err, cat) {
+        if (err) res.json(err);
+        else res.redirect('/cats');
+    });
+});
+
 module.exports = CatRouter;
