@@ -1,5 +1,4 @@
 const express = require('express');
-const app = express();
 const CatRouter = express.Router();
 const Cat = require('../models/Cat.model');
 
