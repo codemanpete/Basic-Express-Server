@@ -15,17 +15,22 @@ app.set('view engine', 'ejs');
 
 // mongoose - package to connect to MongoDB
 const mongoose = require('mongoose');
-// legacy code used prior to mongoose 5
-// mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise; // legacy code used prior to mongoose 5
 mongoose.connect('mongodb://localhost/catsdemo');
 
+// body-parser extract the entire body portion of an incoming
+// request stream and exposes it on req.body.
+// as of express 4.16.0 you can use app.use(express.json()) instead
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const CatRouter = require('./routes/CatRouter');
+// sets up routing to paths with prefix /cats and lets
+// CatRouter handle them.
 app.use('/cats', CatRouter);
 
+// path - javascript class that joins strings into a path
 const path = require('path');
 app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname,'public', 'index.html'));

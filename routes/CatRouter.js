@@ -2,6 +2,9 @@ const express = require('express');
 const CatRouter = express.Router();
 const Cat = require('../models/Cat.model');
 
+// [req] - request
+// [res] - result
+
 CatRouter.route('/').get(function (req, res) {
     Cat.find(function (err, cats) {
         if(err){
