@@ -36,6 +36,9 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname,'public', 'index.html'));
 });
 
+const CatAPIRouter = require('./routes/CatAPIRouter');
+app.use('/api/cats', CatAPIRouter);
+
 const port = 3000;
 app.listen(port, function(){
     console.log('99 Cats express api');
