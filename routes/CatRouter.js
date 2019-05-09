@@ -19,7 +19,7 @@ CatRouter.route('/create').get(function (req, res) {
     res.render('create');
 });
 
-CatRouter.route('/post').post(function (req, res) {
+CatRouter.route('/').post(function (req, res) {
     const cat = new Cat(req.body);
     console.log(cat);
     cat.save()
