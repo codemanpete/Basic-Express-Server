@@ -88,5 +88,20 @@ CatAPIRouter.route('/update/:id').post(function(req, res){
 });
 
 // api - delete cat by :id
+CatAPIRouter.route('/delete/:id').get(function(req, res) {
+    Cat.findByIdAndRemove({_id: req.params.id}, function(err, cat) {
+        if(err) 
+            res.status(500).send({
+                success: 'false',
+                error: err
+            });
+        else 
+            res.status(200).send({
+                success: 'true',
+                method: 'DELETE',
+                cat: cat
+            });
+    });
+});
 
 module.exports = CatAPIRouter;
