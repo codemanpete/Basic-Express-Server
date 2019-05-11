@@ -5,8 +5,13 @@ const Cat = require('../models/Cat.model');
 // queries for a cat given its id
 CatAPIRouter.route('/:id').get(function(req, res) {
     Cat.findById(req.params.id, function(err, cat){
-        if (!cat)
+        if (!cat) {
             console.log(err);
+            res.status(500).send({
+                success: 'false',
+                error: err
+            });
+        }
         else
             res.status(200).send({
                 success: 'true',
@@ -19,8 +24,13 @@ CatAPIRouter.route('/:id').get(function(req, res) {
 // queries for the entire index (all cats)
 CatAPIRouter.route('/').get(function(req, res) {
     Cat.find(function(err, cats) {
-        if (err)
+        if (err) {
             console.log(err);
+            res.status(500).send({
+                success: 'false',
+                error: err
+            });
+        }
         else
             res.status(200).send({
                 success: 'true',
@@ -47,5 +57,36 @@ CatAPIRouter.route('/').post(function(req, res) {
         });
     });
 });
+
+// api - update cat by :id
+CatAPIRouter.route('/update/:id').post(function(req, res){
+    Cat.findById(req.params.id, function(err, cat) {
+        if(!cat) {
+            console.log(err);
+            res.status(500).send({
+                success: 'false',
+                error: err
+            });
+        }
+        else {
+            cat.name = req.body.name;
+            cat.age = req.body.age;
+            cat.save().then(cat => {
+                res.status(200).send({
+                    success: 'true',
+                    method: 'POST',
+                    cat: cat
+                });
+            }).catch( err => {
+                res.status(500).send({
+                    success: 'false',
+                    error: err
+                });
+            });
+        }
+    });
+});
+
+// api - delete cat by :id
 
 module.exports = CatAPIRouter;
