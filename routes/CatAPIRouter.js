@@ -7,7 +7,7 @@ CatAPIRouter.route('/:id').get(function(req, res) {
     Cat.findById(req.params.id, function(err, cat){
         if (!cat) {
             console.log(err);
-            res.status(500).send({
+            res.status(404).send({
                 success: 'false',
                 error: err
             });
@@ -51,7 +51,7 @@ CatAPIRouter.route('/').post(function(req, res) {
             cat: cat
         });
     }).catch( err => {
-        res.status(500).send({
+        res.status(400).send({
             success: 'false',
             error: err
         });
@@ -63,7 +63,7 @@ CatAPIRouter.route('/update/:id').post(function(req, res){
     Cat.findById(req.params.id, function(err, cat) {
         if(!cat) {
             console.log(err);
-            res.status(500).send({
+            res.status(404).send({
                 success: 'false',
                 error: err
             });
@@ -78,7 +78,7 @@ CatAPIRouter.route('/update/:id').post(function(req, res){
                     cat: cat
                 });
             }).catch( err => {
-                res.status(500).send({
+                res.status(400).send({
                     success: 'false',
                     error: err
                 });
@@ -91,9 +91,14 @@ CatAPIRouter.route('/update/:id').post(function(req, res){
 CatAPIRouter.route('/delete/:id').get(function(req, res) {
     Cat.findByIdAndRemove({_id: req.params.id}, function(err, cat) {
         if(err) 
-            res.status(500).send({
+            res.status(404).send({
                 success: 'false',
                 error: err
+            });
+        else if (!cat)
+            res.status(404).send({
+                success: 'false',
+                cat: cat
             });
         else 
             res.status(200).send({
