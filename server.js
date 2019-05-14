@@ -6,7 +6,7 @@ const app = express();
 
 // morgan is an http request logger middleware
 const morgan = require('morgan');
-if (config.util.getEnv('NODE_ENV') !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined')); // [combined] outputs apache style logs
 }
 
@@ -49,3 +49,5 @@ const port = 3000;
 app.listen(port, function(){
     console.log('99 Cats express api');
 });
+
+module.exports = app;
