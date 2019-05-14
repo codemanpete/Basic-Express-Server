@@ -6,10 +6,12 @@ const Schema = mongoose.Schema;
 
 const Cat = new Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     age: {
-        type: Number
+        type: Number,
+        min: 1
     }
 }, {
     // specifies the collection being mapped to.

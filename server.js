@@ -4,6 +4,12 @@
 const express = require('express');
 const app = express();
 
+// morgan is an http request logger middleware
+const morgan = require('morgan');
+if (config.util.getEnv('NODE_ENV') !== 'test') {
+    app.use(morgan('combined')); // [combined] outputs apache style logs
+}
+
 // [express.static] is a built in middleware function that 
 // specifies root directory to serve static assets.
 // [use] is used to apply middleware to the app
