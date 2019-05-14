@@ -13,7 +13,7 @@ chai.use(chaiHttp);
 describe('Cats', function() {
     // Clean up testing database before each test
     beforeEach( function (done) {
-        Cat.remove({}, function(err) {
+        Cat.deleteMany({}, function(err) {
             done();
         });
     });
@@ -87,4 +87,6 @@ describe('Cats', function() {
             });
         });
     });
+
+    
 });

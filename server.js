@@ -23,9 +23,9 @@ app.set('view engine', 'ejs');
 const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise; // legacy code used prior to mongoose 5
 if (process.env.NODE_ENV === 'test')
-    mongoose.connect('mongodb://localhost/catsdemotest');
+    mongoose.connect('mongodb://localhost/catsdemotest', { useNewUrlParser: true });
 else
-    mongoose.connect('mongodb://localhost/catsdemo');
+    mongoose.connect('mongodb://localhost/catsdemo', { useNewUrlParser: true });
 
 // body-parser extract the entire body portion of an incoming
 // request stream and exposes it on req.body.
