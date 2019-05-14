@@ -4,7 +4,7 @@
   "description": "99 cats api using Express.js",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --timeout 10000",
+    "test": "mocha --timeout 10000 --exit",
     "start": "nodemon server.js"
   },
   "author": "Peter Cheng",

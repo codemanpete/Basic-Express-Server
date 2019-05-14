@@ -43,7 +43,6 @@ CatAPIRouter.route('/').get(function(req, res) {
 // api creates a new cat with params in req.body.
 CatAPIRouter.route('/').post(function(req, res) {
     const cat = new Cat(req.body);
-    console.log(cat);
     cat.save().then( cat => {
         res.status(200).send({
             success: 'true',

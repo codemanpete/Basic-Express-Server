@@ -22,7 +22,10 @@ app.set('view engine', 'ejs');
 // mongoose - package to connect to MongoDB
 const mongoose = require('mongoose');
 // mongoose.Promise = global.Promise; // legacy code used prior to mongoose 5
-mongoose.connect('mongodb://localhost/catsdemo');
+if (process.env.NODE_ENV === 'test')
+    mongoose.connect('mongodb://localhost/catsdemotest');
+else
+    mongoose.connect('mongodb://localhost/catsdemo');
 
 // body-parser extract the entire body portion of an incoming
 // request stream and exposes it on req.body.

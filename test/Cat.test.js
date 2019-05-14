@@ -20,7 +20,44 @@ describe('Cats', function() {
                     res.should.have.status(200);
                     res.body.cats.should.be.a('array');
                 });
-                done();
+            done();
         });
     });
+
+    describe('/POST cats', function() {
+        // Test for (invalid) post route
+        it('it should not POST cat without name', function (done) {
+            let badCat = {
+                age: 99
+            };
+            chai.request(server)
+                .post('/api/cats')
+                .send(badCat)
+                .end( function (err, res) {
+                    res.should.not.have.status(200);
+                    res.body.should.have.property('error');
+                    res.body.should.be.a('object');
+                });
+            done();
+        });
+        // Test for post route
+        it('it should POST a cat', function (done) {
+            let goodCat = {
+                name: 'good cat',
+                age: 21
+            };
+            chai.request(server)
+                .post('/api/cats')
+                .send(goodCat)
+                .end( function (err, res) {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('success').eql('true');
+                    console.log(err);
+                    console.log(res.body);
+                });
+            done();
+        });
+    })
+
 });
