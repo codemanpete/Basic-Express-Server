@@ -11,6 +11,13 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 describe('Cats', function() {
+    // Clean up testing database before each test
+    beforeEach( function (done) {
+        Cat.remove({}, function(err) {
+            done();
+        });
+    });
+
     // Test for index route
     describe('/GET cats', function() {
         it('it should GET all the cats', function (done) {
@@ -53,11 +60,31 @@ describe('Cats', function() {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
                     res.body.should.have.property('success').eql('true');
-                    console.log(err);
-                    console.log(res.body);
+                    res.body.cat.should.be.a('object');
+                    res.body.cat.should.have.property('name').eql('good cat');
                 });
             done();
         });
     })
 
+    describe('/GET/:id cats', function() {
+        it('it should GET a cat', function (done) {
+            let exampleCat = new Cat({
+                name: 'example cat',
+                age: 12
+            });
+            exampleCat.save( function (err, cat) {
+                chai.request(server)
+                    .get('/api/cats/' + cat.id)
+                    .end( function (err, res) {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('success').eql('true');
+                        res.body.cat.should.be.a('object');
+                        res.body.cat.should.have.property('name').eql('example cat');
+                    });
+                done();
+            });
+        });
+    });
 });
