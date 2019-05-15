@@ -1,103 +1,21 @@
 const express = require('express');
 const CatAPIRouter = express.Router();
 const Cat = require('../models/Cat.model');
+const CatController = require('../controllers/CatAPIController');
 
 // queries for a cat given its id
-CatAPIRouter.route('/:id').get(function(req, res) {
-    Cat.findById(req.params.id, function(err, cat){
-        if (!cat) {
-            res.status(404).send({
-                success: 'false',
-                error: err
-            });
-        }
-        else
-            res.status(200).send({
-                success: 'true',
-                method: 'GET',
-                cat: cat
-            });
-    });
-});
+CatAPIRouter.route('/:id').get(CatController.CatDetail);
 
 // queries for the entire index (all cats)
-CatAPIRouter.route('/').get(function(req, res) {
-    Cat.find(function(err, cats) {
-        if (err) {
-            res.status(500).send({
-                success: 'false',
-                error: err
-            });
-        }
-        else
-            res.status(200).send({
-                success: 'true',
-                method: 'GET',
-                cats: cats
-            });
-    });
-});
+CatAPIRouter.route('/').get(CatController.CatIndex);
 
 // api creates a new cat with params in req.body.
-CatAPIRouter.route('/').post(function(req, res) {
-    const cat = new Cat(req.body);
-    cat.save().then( cat => {
-        res.status(200).send({
-            success: 'true',
-            method: 'POST',
-            cat: cat
-        });
-    }).catch( err => {
-        res.status(400).send({
-            success: 'false',
-            error: err
-        });
-    });
-});
+CatAPIRouter.route('/').post(CatController.CatCreate);
 
 // api - update cat by :id
-CatAPIRouter.route('/update/:id').post(function(req, res){
-    Cat.findById(req.params.id, function(err, cat) {
-        if(!cat) {
-            res.status(404).send({
-                success: 'false',
-                error: err
-            });
-        }
-        else {
-            cat.name = req.body.name;
-            cat.age = req.body.age;
-            cat.save().then(cat => {
-                res.status(200).send({
-                    success: 'true',
-                    method: 'POST',
-                    cat: cat
-                });
-            }).catch( err => {
-                res.status(400).send({
-                    success: 'false',
-                    error: err
-                });
-            });
-        }
-    });
-});
+CatAPIRouter.route('/update/:id').post(CatController.CatUpdate);
 
 // api - delete cat by :id
-CatAPIRouter.route('/delete/:id').get(function(req, res) {
-    Cat.findByIdAndRemove({_id: req.params.id}, function(err, cat) {
-        if(err) 
-            res.status(404).send({
-                success: 'false',
-                error: err
-            });
-        else 
-            res.status(200).send({
-                success: 'true',
-                method: 'DELETE',
-                cat: cat
-            });
-    });
-});
+CatAPIRouter.route('/delete/:id').get(CatController.CatDelete);
 
 module.exports = CatAPIRouter;
