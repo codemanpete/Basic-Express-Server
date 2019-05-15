@@ -26,8 +26,8 @@ describe('Cats', function() {
                 .end( function (err, res) {
                     res.should.have.status(200);
                     res.body.cats.should.be.a('array');
+                    done();
                 });
-            done();
         });
     });
 
@@ -44,8 +44,8 @@ describe('Cats', function() {
                     res.should.not.have.status(200);
                     res.body.should.have.property('error');
                     res.body.should.be.a('object');
+                    done();
                 });
-            done();
         });
         // Test for post route
         it('it should POST a cat', function (done) {
@@ -62,11 +62,12 @@ describe('Cats', function() {
                     res.body.should.have.property('success').eql('true');
                     res.body.cat.should.be.a('object');
                     res.body.cat.should.have.property('name').eql('good cat');
+                    done();
                 });
-            done();
         });
-    })
+    });
 
+    // Test for GET route
     describe('/GET/:id cats', function() {
         it('it should GET a cat', function (done) {
             let exampleCat = new Cat({
@@ -82,11 +83,55 @@ describe('Cats', function() {
                         res.body.should.have.property('success').eql('true');
                         res.body.cat.should.be.a('object');
                         res.body.cat.should.have.property('name').eql('example cat');
+                        done();
                     });
-                done();
-            });
+                });
         });
     });
 
-    
+    describe('/POST/:id cats', function() {
+        // Test for update route
+        it('it should UPDATE a cat given params and id', function (done) {
+            let exampleCat2 = new Cat({
+                name: 'example cat 2',
+                age: 15
+            });
+            let updateParams = {
+                name: 'improved cat',
+                age: 16
+            };
+            exampleCat2.save( function (err, cat) {
+                chai.request(server)
+                    .post('/api/cats/update/' + cat.id)
+                    .send(updateParams)
+                    .end( function (err, res) {
+                        res.should.have.status(200);
+                        res.body.should.be.a('object');
+                        res.body.should.have.property('success').eql('true');
+                        res.body.cat.should.be.a('object');
+                        res.body.cat.should.have.property('name').eql('improved cat');
+                        res.body.cat.should.have.property('age').eql(16);
+                        done();
+                    });
+            });
+        });
+
+        // Test for update route with invalid cat id
+        it('it should return error when given invalid id', function (done) {
+            let updateParams = {
+                name: 'impossible cat',
+                age: 9999
+            };
+            chai.request(server)
+                .post('/api/cats/update/invalidcatid123132')
+                .send(updateParams)
+                .end( function (err, res) {
+                    res.should.have.status(404);
+                    res.body.should.have.property('error');
+                    done();
+                });
+        });
+    });
+
+
 });

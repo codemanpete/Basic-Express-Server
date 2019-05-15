@@ -6,7 +6,6 @@ const Cat = require('../models/Cat.model');
 CatAPIRouter.route('/:id').get(function(req, res) {
     Cat.findById(req.params.id, function(err, cat){
         if (!cat) {
-            console.log(err);
             res.status(404).send({
                 success: 'false',
                 error: err
@@ -25,7 +24,6 @@ CatAPIRouter.route('/:id').get(function(req, res) {
 CatAPIRouter.route('/').get(function(req, res) {
     Cat.find(function(err, cats) {
         if (err) {
-            console.log(err);
             res.status(500).send({
                 success: 'false',
                 error: err
@@ -61,7 +59,6 @@ CatAPIRouter.route('/').post(function(req, res) {
 CatAPIRouter.route('/update/:id').post(function(req, res){
     Cat.findById(req.params.id, function(err, cat) {
         if(!cat) {
-            console.log(err);
             res.status(404).send({
                 success: 'false',
                 error: err
