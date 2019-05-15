@@ -91,11 +91,6 @@ CatAPIRouter.route('/delete/:id').get(function(req, res) {
                 success: 'false',
                 error: err
             });
-        else if (!cat)
-            res.status(404).send({
-                success: 'false',
-                cat: cat
-            });
         else 
             res.status(200).send({
                 success: 'true',

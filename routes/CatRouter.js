@@ -21,7 +21,6 @@ CatRouter.route('/create').get(function (req, res) {
 
 CatRouter.route('/').post(function (req, res) {
     const cat = new Cat(req.body);
-    console.log(cat);
     cat.save()
         .then( cat => {
             res.redirect('/cats');

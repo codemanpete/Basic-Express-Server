@@ -26,7 +26,7 @@ describe('Cats', function() {
                 .end( function (err, res) {
                     res.should.have.status(200);
                     res.body.cats.should.be.a('array');
-                    done();
+                    done(); // important for where done is located.
                 });
         });
     });
@@ -133,5 +133,33 @@ describe('Cats', function() {
         });
     });
 
+    // Test for DELETE route
+    describe('/DELETE/:id cats', function () {
+        it('it should DELETE a cat given id', function (done){
+            let doomedCat = new Cat({
+                name: "trash cat",
+                age: 10
+            });
+            doomedCat.save(function (err, cat) {
+                chai.request(server)
+                    .get('/api/cats/delete/' + cat.id)
+                    .end( function (err, res) {
+                        res.should.have.status(200);
+                        res.body.should.have.property('success').eql('true');
+                        res.body.cat.should.have.property('name').eql('trash cat');
+                        done();
+                    });
+            });
+        });
 
+        it('it should return error when given invalid id', function (done) {
+            chai.request(server)
+                .get('/api/cats/delete/invalidcatid1200049',)
+                .end( function (err, res) {
+                    res.should.have.status(404);
+                    res.body.should.have.property('error');
+                    done()
+                });
+        });
+    });
 });
