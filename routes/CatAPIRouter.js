@@ -1,6 +1,5 @@
 const express = require('express');
 const CatAPIRouter = express.Router();
-const Cat = require('../models/Cat.model');
 const CatController = require('../controllers/CatAPIController');
 
 // queries for a cat given its id
