@@ -5,17 +5,17 @@ const Schema = mongoose.Schema;
 // the shape of the documents within that collection.
 
 const Cat = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: Number,
-        min: 1
-    }
+  name: {
+    type: String,
+    required: true
+  },
+  age: {
+    type: Number,
+    min: 1
+  }
 }, {
-    // specifies the collection being mapped to.
-    collection: 'cats'
+  // specifies the collection being mapped to.
+  collection: 'cats'
 });
 
 // model is a wrapper around a schema
