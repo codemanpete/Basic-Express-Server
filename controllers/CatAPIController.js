@@ -39,8 +39,8 @@ const CatAPIController = {
 
     // controller for create new cat
     CatCreate: function(req, res) {
-        const cat = new Cat(req.body);
-        cat.save().then( cat => {
+        const makeCat = new Cat(req.body);
+        makeCat.save().then( cat => {
             res.status(200).send({
                 success: 'true',
                 method: 'POST',
@@ -56,26 +56,26 @@ const CatAPIController = {
 
     // controller for update cat by id
     CatUpdate: function(req, res){
-        Cat.findById(req.params.id, function(err, cat) {
-            if(!cat) {
+        Cat.findById(req.params.id, function(err, foundCat) {
+            if(!foundCat) {
                 res.status(404).send({
                     success: 'false',
                     error: err
                 });
             }
             else {
-                cat.name = req.body.name;
-                cat.age = req.body.age;
-                cat.save().then(cat => {
+                foundCat.name = req.body.name;
+                foundCat.age = req.body.age;
+                foundCat.save().then(cat => {
                     res.status(200).send({
                         success: 'true',
                         method: 'POST',
                         cat: cat
                     });
-                }).catch( err => {
+                }).catch( saveErr => {
                     res.status(400).send({
                         success: 'false',
-                        error: err
+                        error: saveErr
                     });
                 });
             }

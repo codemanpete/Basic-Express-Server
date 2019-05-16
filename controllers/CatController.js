@@ -18,7 +18,7 @@ const CatController = {
     CatPost: function (req, res) {
         const cat = new Cat(req.body);
         cat.save()
-            .then( cat => {
+            .then( _cat => {
                 res.redirect('/cats');
             })
             .catch( err => {
@@ -27,7 +27,7 @@ const CatController = {
     },
 
     // controller for update cat by id
-    CatUpdate: function (req, res) {
+    CatUpdate: function (req, res, next) {
         Cat.findById(req.params.id, function(err, cat) {
             if (!cat)
                 return next(new Error('Could not load Document'));
@@ -35,10 +35,10 @@ const CatController = {
                 cat.name = req.body.name;
                 cat.age = req.body.age;
     
-                cat.save().then(cat => {
+                cat.save().then(_cat => {
                     res.redirect('/cats');
                 })
-                .catch(err => {
+                .catch(_err => {
                     res.status(400).send("unable to update the database.");
                 });
             }

@@ -77,12 +77,13 @@ describe('Cats', function() {
             exampleCat.save( function (err, cat) {
                 chai.request(server)
                     .get('/api/cats/' + cat.id)
-                    .end( function (err, res) {
+                    .end( function (_err, res) {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         res.body.should.have.property('success').eql('true');
                         res.body.cat.should.be.a('object');
-                        res.body.cat.should.have.property('name').eql('example cat');
+                        res.body.cat.should.have.property('name')
+                            .eql('example cat');
                         done();
                     });
                 });
@@ -104,12 +105,13 @@ describe('Cats', function() {
                 chai.request(server)
                     .post('/api/cats/update/' + cat.id)
                     .send(updateParams)
-                    .end( function (err, res) {
+                    .end( function (_err, res) {
                         res.should.have.status(200);
                         res.body.should.be.a('object');
                         res.body.should.have.property('success').eql('true');
                         res.body.cat.should.be.a('object');
-                        res.body.cat.should.have.property('name').eql('improved cat');
+                        res.body.cat.should.have.property('name')
+                            .eql('improved cat');
                         res.body.cat.should.have.property('age').eql(16);
                         done();
                     });
@@ -143,10 +145,11 @@ describe('Cats', function() {
             doomedCat.save(function (err, cat) {
                 chai.request(server)
                     .get('/api/cats/delete/' + cat.id)
-                    .end( function (err, res) {
+                    .end( function (_err, res) {
                         res.should.have.status(200);
                         res.body.should.have.property('success').eql('true');
-                        res.body.cat.should.have.property('name').eql('trash cat');
+                        res.body.cat.should.have.property('name')
+                            .eql('trash cat');
                         done();
                     });
             });
@@ -154,11 +157,11 @@ describe('Cats', function() {
 
         it('it should return error when given invalid id', function (done) {
             chai.request(server)
-                .get('/api/cats/delete/invalidcatid1200049',)
+                .get('/api/cats/delete/invalidcatid1200049')
                 .end( function (err, res) {
                     res.should.have.status(404);
                     res.body.should.have.property('error');
-                    done()
+                    done();
                 });
         });
     });
